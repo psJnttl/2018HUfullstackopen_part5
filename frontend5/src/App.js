@@ -7,6 +7,7 @@ import LoginState from './components/LoginState'
 import Blogform from './components/Blogform'
 import TheNote from './components/TheNote'
 import './index.css'
+import Togglable from './components/Togglable'
 
 class App extends React.Component {
   constructor(props) {
@@ -55,7 +56,9 @@ class App extends React.Component {
                 logout={this.logout} />
             </div>
             <div>
-              <Blogform postBlog={this.postBlog}/>
+              <Togglable buttonLabel='new blog'>
+                <Blogform postBlog={this.postBlog}/>
+              </Togglable>
             </div>
             {blogList}
           </div>
