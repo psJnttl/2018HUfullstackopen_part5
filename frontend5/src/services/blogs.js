@@ -33,8 +33,24 @@ const putBlog = async (blog, id, showNotification) => {
     return response.data;
   }
   catch (error) {
-    showNotification("Like epäonnistui.", "failnote", 7000);
+    showNotification('Like epäonnistui.', 'failnote', 7000);
   }
 }
 
-export default { getAll, postBlog, putBlog};
+const deleteBlog = async(blog, token, showNotification) => {
+  const id = blog.id;
+  const config = {
+    headers: { 'Authorization': 'bearer ' + token }
+  }
+  try {
+    const response = await axios.delete(baseUrl + '/' + id, config);
+    return response;
+  }
+  catch (error) {
+    const err = error;
+    showNotification('Blogin poisto epäonnistui.', 'failnote', 7000);
+  }
+}
+
+
+export default { getAll, postBlog, putBlog, deleteBlog};

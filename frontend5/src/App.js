@@ -38,7 +38,12 @@ class App extends React.Component {
       return b.likes - a.likes;
     });
     const blogList = this.state.blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} onUpdate={this.putBlog}/>
+      <Blog
+        key={blog.id}
+        blog={blog}
+        onUpdate={this.putBlog}
+        onDelete={this.deleteBlog}
+      />
     );
     return (
       <div>
@@ -103,6 +108,16 @@ class App extends React.Component {
   putBlog = async (blog, id) => {
     const response = await blogService.putBlog(blog, id, this.showNotification);
     if (response) {
+      const blogs = await blogService.getAll();
+      this.setState({blogs: blogs});
+    }
+  }
+
+  deleteBlog = async(blog) => {
+    const token = this.state.user.token;
+    const response = await blogService.deleteBlog(blog, token, this.showNotification);
+
+    if (response && response.status && response.status === 204) {
       const blogs = await blogService.getAll();
       this.setState({blogs: blogs});
     }

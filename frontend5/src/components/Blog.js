@@ -19,9 +19,17 @@ class Blog extends React.Component {
         author: blog.author,
         url: blog.url,
         likes: blog.likes + 1,
-        user: blog.user._id
+        user: blog.user ? blog.user._id : undefined
     };
     this.props.onUpdate(updatedBlog, blog.id);
+  }
+
+  delete = () => {
+    let blog = this.props.blog;
+    let result = window.confirm("Delete '" + blog.title + "', really? ");
+    if (result) {
+      this.props.onDelete(blog);
+    }
   }
 
   render() {
@@ -36,7 +44,8 @@ class Blog extends React.Component {
         <div style={detailsStyle}>
           <a href={blog.url}>{blog.url}</a><br />
           {blog.likes} likes <button onClick={this.incrementLike}>like</button><br />
-          added by {blog.user ? blog.user.name : ''}<br />
+          added by {blog.user ? blog.user.name : 'anonymous'}<br />
+          <button onClick={this.delete}>delete</button>
         </div>
       </div>
     );
