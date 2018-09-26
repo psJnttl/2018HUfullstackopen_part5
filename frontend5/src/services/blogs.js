@@ -47,7 +47,6 @@ const deleteBlog = async(blog, token, showNotification) => {
     return response;
   }
   catch (error) {
-    const err = error;
     showNotification('Blogin poisto epäonnistui.', 'failnote', 7000);
   }
 }
