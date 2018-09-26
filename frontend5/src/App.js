@@ -14,14 +14,14 @@ class App extends React.Component {
     blogService.getAll().then(blogs =>
       this.setState({ blogs })
     )
-  } 
+  }
 
   render() {
     return (
       <div>
         <h2>blogs</h2>
-        {this.state.blogs.map(blog => 
-          <Blog key={blog._id} blog={blog}/>
+        {this.state.blogs.map(blog =>
+          <Blog key={blog.id} blog={blog}/>
         )}
       </div>
     );
