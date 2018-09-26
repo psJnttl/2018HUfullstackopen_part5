@@ -6,21 +6,25 @@ const getAll = async () => {
   return response.data;
 }
 
-const postBlog = async (blog, token) => {
+const postBlog = async (blog, token, showNotification) => {
   try {
     const config = {
       headers: { 'Authorization': 'bearer ' + token }
     }
     const response = await axios.post(baseUrl, blog, config);
     console.log(response.data);
+    showNotification("Blogi lisätty: '" + response.data.title + "'.", "oknote", 7000);
     return response.data;
   }
   catch(error) {
-    const err = error;
     if (error.response.status === 401) {
+      const srvMsg = error.response.data.error;
       console.log(error.response.data.error);
+      showNotification("Lisäys epäonnistui, 401: " + srvMsg, "failnote", 7000);
     }
-    console.log(error);
+    else {
+      showNotification("Lisäys epäonnistui.", "failnote", 7000);
+    }
   }
 }
 

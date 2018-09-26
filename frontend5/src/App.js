@@ -5,13 +5,17 @@ import Loginform from './components/Loginform'
 import LoginService from './services/login'
 import LoginState from './components/LoginState'
 import Blogform from './components/Blogform'
+import TheNote from './components/TheNote'
+import './index.css'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       blogs: [],
-      user: null
+      user: null,
+      note: '',
+      noteStyle: ''
     }
   }
 
@@ -34,6 +38,10 @@ class App extends React.Component {
     );
     return (
       <div>
+        <TheNote
+          note={this.state.note}
+          style={this.state.noteStyle}
+        />
         { this.state.user === null &&
           <Loginform
             onUserLogin={this.loginPost}
@@ -64,7 +72,11 @@ class App extends React.Component {
     }
     catch (error) {
       if (error.response.data.error) {
-        console.log("FAIL:", error.response.data.error);
+        const msg = error.response.data.error;
+        this.showNotification("Kirjautuminen epäonnistui, serverin viesti: " + msg, "failnote", 7000);
+      }
+      else {
+        this.showNotification("Kirjautuminen epäonnistui: ", "failnote", 7000);
       }
     }
   }
@@ -76,13 +88,17 @@ class App extends React.Component {
 
   postBlog = async (blog) => {
     console.log(blog);
-    const response = await blogService.postBlog(blog, this.state.user.token);
+    const response = await blogService.postBlog(blog, this.state.user.token, this.showNotification);
     if (response) {
       const blogs = await blogService.getAll();
       this.setState({blogs: blogs});
     }
   }
 
+  showNotification = (msg, css, duration) => {
+    this.setState({note: msg, noteStyle: css});
+    setTimeout( () => { this.setState({note: null})}, duration );
+  }
 }
 
 export default App;
