@@ -4,6 +4,7 @@ import blogService from './services/blogs'
 import Loginform from './components/Loginform'
 import LoginService from './services/login'
 import LoginState from './components/LoginState'
+import Blogform from './components/Blogform'
 
 class App extends React.Component {
   constructor(props) {
@@ -45,6 +46,9 @@ class App extends React.Component {
               <LoginState user={this.state.user}
                 logout={this.logout} />
             </div>
+            <div>
+              <Blogform postBlog={this.postBlog}/>
+            </div>
             {blogList}
           </div>
         }
@@ -68,6 +72,15 @@ class App extends React.Component {
   logout = () => {
     this.setState({user: null});
     window.localStorage.removeItem('BlogAppLoggedUser');
+  }
+
+  postBlog = async (blog) => {
+    console.log(blog);
+    const response = await blogService.postBlog(blog, this.state.user.token);
+    if (response) {
+      const blogs = await blogService.getAll();
+      this.setState({blogs: blogs});
+    }
   }
 
 }
