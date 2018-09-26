@@ -41,6 +41,7 @@ class App extends React.Component {
       <Blog
         key={blog.id}
         blog={blog}
+        logged={this.state.user}
         onUpdate={this.putBlog}
         onDelete={this.deleteBlog}
       />
