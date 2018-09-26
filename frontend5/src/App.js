@@ -35,7 +35,7 @@ class App extends React.Component {
 
   render() {
     const blogList = this.state.blogs.map(blog =>
-      <Blog key={blog.id} blog={blog}/>
+      <Blog key={blog.id} blog={blog} onUpdate={this.putBlog}/>
     );
     return (
       <div>
@@ -90,8 +90,15 @@ class App extends React.Component {
   }
 
   postBlog = async (blog) => {
-    console.log(blog);
     const response = await blogService.postBlog(blog, this.state.user.token, this.showNotification);
+    if (response) {
+      const blogs = await blogService.getAll();
+      this.setState({blogs: blogs});
+    }
+  }
+
+  putBlog = async (blog, id) => {
+    const response = await blogService.putBlog(blog, id, this.showNotification);
     if (response) {
       const blogs = await blogService.getAll();
       this.setState({blogs: blogs});

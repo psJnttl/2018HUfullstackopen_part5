@@ -12,6 +12,18 @@ class Blog extends React.Component {
     this.setState({visible: !this.state.visible});
   }
 
+  incrementLike = () => {
+    const blog = this.props.blog;
+    const updatedBlog = {
+        title: blog.title,
+        author: blog.author,
+        url: blog.url,
+        likes: blog.likes + 1,
+        user: blog.user._id
+    };
+    this.props.onUpdate(updatedBlog, blog.id);
+  }
+
   render() {
     const header = {cursor: 'pointer'};
     const hide = {display: 'none'};
@@ -23,7 +35,7 @@ class Blog extends React.Component {
         <div onClick={this.toggle} style={header}>{blog.title} {blog.author}</div>
         <div style={detailsStyle}>
           <a href={blog.url}>{blog.url}</a><br />
-          {blog.likes} likes <button>like</button><br />
+          {blog.likes} likes <button onClick={this.incrementLike}>like</button><br />
           added by {blog.user ? blog.user.name : ''}<br />
         </div>
       </div>

@@ -12,11 +12,10 @@ const postBlog = async (blog, token, showNotification) => {
       headers: { 'Authorization': 'bearer ' + token }
     }
     const response = await axios.post(baseUrl, blog, config);
-    console.log(response.data);
     showNotification("Blogi lisätty: '" + response.data.title + "'.", "oknote", 7000);
     return response.data;
   }
-  catch(error) {
+  catch (error) {
     if (error.response.status === 401) {
       const srvMsg = error.response.data.error;
       console.log(error.response.data.error);
@@ -28,4 +27,14 @@ const postBlog = async (blog, token, showNotification) => {
   }
 }
 
-export default { getAll, postBlog}
+const putBlog = async (blog, id, showNotification) => {
+  try {
+    const response = await axios.put(baseUrl + '/' + id, blog);
+    return response.data;
+  }
+  catch (error) {
+    showNotification("Like epäonnistui.", "failnote", 7000);
+  }
+}
+
+export default { getAll, postBlog, putBlog};
