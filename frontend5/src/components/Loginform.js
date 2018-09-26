@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 class Loginform extends React.Component {
   constructor(props) {
@@ -50,4 +51,9 @@ class Loginform extends React.Component {
     this.props.onUserLogin(this.state.username, this.state.password);
   }
 }
+
+Loginform.propTypes = {
+  onUserLogin: PropTypes.func.isRequired
+};
+
 export default Loginform;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 
 class LoginState extends React.Component {
   constructor(props) {
@@ -31,5 +32,10 @@ class LoginState extends React.Component {
     }
   }
 }
+
+LoginState.propTypes = {
+  user: PropTypes.object.isRequired,
+  logout: PropTypes.func.isRequired
+};
 
 export default LoginState;
