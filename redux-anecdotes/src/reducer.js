@@ -36,6 +36,7 @@ const reducer = (state = initialState, action) => {
         return action.data.id !== item.id;
       })
       const newState = theRest.concat(dote);
+      newState.sort((a,b) => b.votes-a.votes);
       return newState;
     default:
     return state
