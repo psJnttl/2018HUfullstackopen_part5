@@ -22,3 +22,38 @@ describe('<App /> when no user logged.', () => {
   });
 
 });
+
+describe('<App /> when user is logged', () => {
+  let app;
+  beforeEach(() => {
+    window.localStorage.setItem('BlogAppLoggedUser', JSON.stringify({
+      username: 'johnd', name: 'John Doe', adult: true, token: 'aabbccdd'
+    }));
+    app = mount(<App />);
+  });
+
+  it('Blogs are shown when user is logged in.', () => {
+    let user = JSON.parse(window.localStorage.getItem('BlogAppLoggedUser'));
+    expect(user.username).toEqual('johnd');
+    app.update();
+    const blogComponents = app.find(Blog);
+    expect(blogComponents.length).toEqual(3);
+  });
+
+  it('Blogs have expected content.', () => {
+    app.update();
+    const content1 = app.state().blogs.find( (b) => {
+      return b.content === 'Funktionaalisuus on paradigma.';
+    });
+    const content2 = app.state().blogs.find( (b) => {
+      return b.content === 'Pahimmat kaatuilijat 2018 World Cupissa.';
+    });
+    const content3 = app.state().blogs.find( (b) => {
+      return b.content === 'Ref debuggausta1';
+    });
+    expect(content1).toBeTruthy();
+    expect(content2).toBeTruthy();
+    expect(content3).toBeTruthy();
+
+  });
+});
