@@ -8,9 +8,9 @@ describe('redux anecdotes reducer', () => {
     { id: 2, content: 'bbb', votes: 0},
     { id: 3, content: 'ccc', votes: 0}
   ];
-  const actionVote1 = {type: 'VOTE', data: {id: 1} };
-  const actionVote2 = {type: 'VOTE', data: {id: 2} };
-  const actionVote3 = {type: 'VOTE', data: {id: 3} };
+  const voteFor = (id) => {
+    return {type: 'VOTE', data: {id: id} };
+  };
 
   it('returns state unchanged when called with unknown action', () => {
     const action = {
@@ -26,13 +26,13 @@ describe('redux anecdotes reducer', () => {
     const state = initialAnecdodes;
 
     deepFreeze(state);
-    const newState = reducer(state, actionVote1);
+    const newState = reducer(state, voteFor(1));
     deepFreeze(newState);
-    const newState2 = reducer(newState, actionVote3);
+    const newState2 = reducer(newState, voteFor(3));
     deepFreeze(newState2);
-    const newState3 = reducer(newState2, actionVote3);
+    const newState3 = reducer(newState2, voteFor(3));
     deepFreeze(newState3);
-    const newState4 = reducer(newState3, actionVote3);
+    const newState4 = reducer(newState3, voteFor(3));
 
     const item1 = newState4.find((a) => a.id === 1 );
     const item2 = newState4.find((a) => a.id === 2 );
@@ -55,13 +55,28 @@ describe('redux anecdotes reducer', () => {
     ];
 
     deepFreeze(state);
-    const newState = reducer(state, actionVote2);
+    const newState = reducer(state, voteFor(2));
     deepFreeze(newState);
-    const newState2 = reducer(newState, actionVote1);
+    const newState2 = reducer(newState, voteFor(1));
     deepFreeze(newState2);
-    const newState3 = reducer(newState2, actionVote3);
+    const newState3 = reducer(newState2, voteFor(3));
 
     expect(newState3).toEqual(expectedState);
+  });
 
+  it('new anecdote can be added with unique id', () => {
+    const action = {
+      type: 'NEW_ANECDOTE',
+      data: {content:'ddd'}
+    };
+    const state = initialAnecdodes;
+
+    deepFreeze(state);
+    const newState = reducer(state, action);
+
+    const added = newState.find((a) => a.content === action.data.content);
+    const sameId = newState.filter((a) => a.id === added.id);
+    expect(sameId.length).toEqual(1);
+    expect(added.votes).toEqual(0);
   });
 });

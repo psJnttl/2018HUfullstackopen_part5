@@ -38,6 +38,14 @@ const reducer = (state = initialState, action) => {
       const newState = theRest.concat(dote);
       newState.sort((a,b) => b.votes-a.votes);
       return newState;
+    case 'NEW_ANECDOTE':
+      const anecdote = {
+        content: action.data.content,
+        votes: 0,
+        id: getId()
+      }
+      const state2 = state.concat(anecdote);
+      return state2;
     default:
     return state
   }

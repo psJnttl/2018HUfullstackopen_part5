@@ -1,7 +1,7 @@
 import React from 'react';
 import action from './actionCreators'
 
-const Anecdotes = ({store}) => {
+const Anecdotes = ({store, btnStyle}) => {
   const anecdotes = store.getState()
   return (
   <div>
@@ -13,7 +13,7 @@ const Anecdotes = ({store}) => {
         </div>
         <div>
           has {anecdote.votes}
-          <button onClick={()=>store.dispatch(action.voteAnecdode(anecdote.id))}>vote</button>
+          <button style={btnStyle} onClick={()=>store.dispatch(action.voteAnecdode(anecdote.id))}>vote</button>
         </div>
       </div>
     )}
