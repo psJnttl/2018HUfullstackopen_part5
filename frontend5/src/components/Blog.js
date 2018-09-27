@@ -53,9 +53,9 @@ class Blog extends React.Component {
     const detailsStyle = this.state.visible ? ds : hide;
     const buttonStyle = this.determineButtonStyle();
     return (
-      <div style={{borderWidth: 1, border: 'solid', padding: 4, margin:2}}>
-        <div onClick={this.toggle} style={header}>{blog.title} {blog.author}</div>
-        <div style={detailsStyle}>
+      <div className='content' style={{borderWidth: 1, border: 'solid', padding: 4, margin:2}}>
+        <div className='header' id='toggleShow' onClick={this.toggle} style={header}>{blog.title} {blog.author}</div>
+        <div className='details' style={detailsStyle}>
           <a href={blog.url}>{blog.url}</a><br />
           {blog.likes} likes <button onClick={this.incrementLike}>like</button><br />
           added by {blog.user ? blog.user.name : 'anonymous'}<br />
