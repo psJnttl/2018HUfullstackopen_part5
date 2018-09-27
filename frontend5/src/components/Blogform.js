@@ -13,7 +13,7 @@ class Blogform extends React.Component {
   componentWillMount() {}
   render() {
     return (
-      <form onSubmit={this.handleBlogPost}>
+      <form id='blogForm' onSubmit={this.handleBlogPost}>
         <table>
           <tbody>
             <tr>
@@ -23,6 +23,7 @@ class Blogform extends React.Component {
                   type='text'
                   onChange={this.handleInputChange}
                   name='author'
+                  id='author'
                 />
               </td>
             </tr>
@@ -33,6 +34,7 @@ class Blogform extends React.Component {
                   type='text'
                   onChange={this.handleInputChange}
                   name='title'
+                  id='title'
                   autoComplete="off"
                 />
               </td>
@@ -44,6 +46,7 @@ class Blogform extends React.Component {
                   type='text'
                   onChange={this.handleInputChange}
                   name='url'
+                  id='url'
                   autoComplete="off"
                 />
               </td>
@@ -51,7 +54,7 @@ class Blogform extends React.Component {
             <tr>
               <td></td>
               <td>
-                <button type="submit">Submit</button>
+                <button id='submitButton' type="submit">Submit</button>
               </td>
             </tr>
           </tbody>
