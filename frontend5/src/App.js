@@ -37,15 +37,18 @@ class App extends React.Component {
     this.state.blogs.sort( (a, b) => {
       return b.likes - a.likes;
     });
-    const blogList = this.state.blogs.map(blog =>
-      <Blog
-        key={blog.id}
-        blog={blog}
-        logged={this.state.user}
-        onUpdate={this.putBlog}
-        onDelete={this.deleteBlog}
-      />
-    );
+    let blogList = null;
+    if (this.state.user) {
+      blogList = this.state.blogs.map(blog =>
+        <Blog
+          key={blog.id}
+          blog={blog}
+          logged={this.state.user}
+          onUpdate={this.putBlog}
+          onDelete={this.deleteBlog}
+        />
+      );
+    }
     return (
       <div>
         <TheNote
