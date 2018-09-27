@@ -1,20 +1,33 @@
-const noteReducer = (state = [0, 0, 0], action) => {
-  console.log('state: ', state);
+const initialState = {
+  good: 0,
+  ok: 0,
+  bad: 0
+};
+
+const noteReducer = (state = initialState, action) => {
+  let g = state.good;
+  let o = state.ok;
+  let b = state.bad;
   switch (action.type) {
     case 'GOOD':
-      let [first, ...rest] = state;
-      return [++first, ...rest];
+      g++;
+      break;
     case 'OK':
-      let [f, ok, l] = state
-      return [f, ++ok, l];
+      o++;
+      break;
     case 'BAD':
-      let [g, o, bad] = state;
-      return [g, o, ++bad];
+      b++;
+      break;
     case 'CLEAR':
-      return [0, 0, 0];
+      return initialState;
     default:
       return state;
   }
+  return {
+    good: g,
+    ok: o,
+    bad: b
+  };
 };
 
 export default noteReducer;

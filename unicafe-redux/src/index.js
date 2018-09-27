@@ -6,11 +6,8 @@ import noteReducer from './noteReducer'
 const store = createStore(noteReducer);
 
 const Statistiikka = ({inputs}) => {
-  let [theGood, theOKish, theBad] = inputs;
-  let palautteita = inputs.reduce((a,b) => a + b );
-  let positive = theGood/palautteita*100;
-  let average = ((1 * theGood) + (-1 * theBad)) / (1.0 * palautteita);
-  if (palautteita === 0) {
+  let palautteita = 0
+    if (palautteita === 0) {
     return (
       <div>
         <h2>statistiikka</h2>
@@ -26,36 +23,35 @@ const Statistiikka = ({inputs}) => {
         <tbody>
           <tr>
             <td>hyvä</td>
-            <td>{theGood}</td>
+            <td></td>
           </tr>
           <tr>
             <td>neutraali</td>
-            <td>{theOKish}</td>
+            <td></td>
           </tr>
           <tr>
             <td>huono</td>
-            <td>{theBad}</td>
+            <td></td>
           </tr>
           <tr>
             <td>keskiarvo</td>
-            <td>{average.toFixed(2)}</td>
+            <td></td>
           </tr>
           <tr>
             <td>positiivisia</td>
-            <td>{positive.toFixed(2)} %</td>
+            <td></td>
           </tr>
         </tbody>
       </table>
 
-      <button onClick={()=>store.dispatch({type: 'CLEAR'})}>nollaa tilasto</button>
+      <button>nollaa tilasto</button>
     </div>
   )
 }
 
 class App extends React.Component {
   klik = (nappi) => {
-    console.log(nappi);
-    store.dispatch({ type: nappi});
+
   }
 
   render() {
